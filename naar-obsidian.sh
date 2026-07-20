@@ -21,7 +21,13 @@ if [ -z "${OBSIDIAN_VAULT_INBOX:-}" ] && [ -n "${VAULT_PATH:-}" ]; then
   OBSIDIAN_VAULT_INBOX="$VAULT_PATH/${VAULT_FOLDER:-Inbox}"
 fi
 
-VAULT_INBOX="${OBSIDIAN_VAULT_INBOX:-/Users/h.j.tenbolscher/Library/CloudStorage/OneDrive-Saxion/Obsidian/Saxion/Inbox}"
+if [ -z "${OBSIDIAN_VAULT_INBOX:-}" ]; then
+  echo "Geen doelvault ingesteld." >&2
+  echo "Kopieer naar-obsidianrc.example naar ~/.naar-obsidianrc en vul VAULT_PATH (en evt. VAULT_FOLDER) in, of zet de env var OBSIDIAN_VAULT_INBOX." >&2
+  exit 1
+fi
+
+VAULT_INBOX="$OBSIDIAN_VAULT_INBOX"
 
 if [ "$#" -lt 1 ]; then
   echo "Gebruik: $0 <url | pad-naar.pdf | pad-naar.docx|.pptx|.odt|.rtf>" >&2

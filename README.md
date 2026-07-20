@@ -37,11 +37,15 @@ Voor dagelijks gebruik hoef je niets op de command line te doen:
 
 1. Sleep of bewaar bestanden (`.pdf`, `.docx`, `.pptx`, `.odt`, `.rtf`) in de
    map `~/NaarMarkdown` (wordt automatisch aangemaakt bij de eerste run).
+   Wil je een **webpagina** toevoegen: sleep de link uit Safari's adresbalk
+   (of uit Mail) naar diezelfde map — dat maakt automatisch een
+   `.webloc`-bestand aan, dat door de workflow herkend en verwerkt wordt
+   als URL.
 2. Dubbelklik op `Verwerk.app` (staat in de projectmap, naast dit README).
-3. Elk bestand in `~/NaarMarkdown` wordt omgezet, met frontmatter in de
-   Obsidian Inbox gezet, en het originele bestand verdwijnt naar de
-   prullenbak. Je krijgt een macOS-notificatie met het resultaat
-   (aantal gelukt/mislukt).
+3. Elk bestand (en elke `.webloc`-link) in `~/NaarMarkdown` wordt omgezet,
+   met frontmatter in de Obsidian Inbox gezet, en het originele
+   bestand/linkje verdwijnt naar de prullenbak. Je krijgt een
+   macOS-notificatie met het resultaat (aantal gelukt/mislukt).
 
 Bestanden die mislukken (bijv. een corrupte PDF) blijven gewoon in
 `~/NaarMarkdown` staan zodat je ze kunt bekijken; details staan in
@@ -78,16 +82,13 @@ VAULT_PATH="/pad/naar/je/vault"
 VAULT_FOLDER="Inbox"
 ```
 
-Zonder dit bestand vallen de scripts terug op `~/NaarMarkdown` als watch-map
-en op:
+Zonder dit bestand vallen de scripts terug op `~/NaarMarkdown` als watch-map,
+maar stoppen ze met een duidelijke foutmelding zodra er geen doelvault is
+ingesteld — er zit dus geen hardcoded persoonlijk vaultpad in de broncode.
 
-```
-/Users/h.j.tenbolscher/Library/CloudStorage/OneDrive-Saxion/Obsidian/Saxion/Inbox
-```
-
-als doelmap. Wil je liever in één keer het volledige doelpad opgeven in
-plaats van `VAULT_PATH`/`VAULT_FOLDER`, zet dan `OBSIDIAN_VAULT_INBOX` (heeft
-voorrang) — hetzij in `~/.naar-obsidianrc`, hetzij losstaand als env var:
+Wil je liever in één keer het volledige doelpad opgeven in plaats van
+`VAULT_PATH`/`VAULT_FOLDER`, zet dan `OBSIDIAN_VAULT_INBOX` (heeft voorrang)
+— hetzij in `~/.naar-obsidianrc`, hetzij losstaand als env var:
 
 ```bash
 OBSIDIAN_VAULT_INBOX="/pad/naar/andere/vault/Inbox" ./naar-obsidian.sh document.pdf
@@ -98,7 +99,9 @@ OBSIDIAN_VAULT_INBOX="/pad/naar/andere/vault/Inbox" ./naar-obsidian.sh document.
 Per inputtype is een ander commando nodig, alleen dat commando moet aanwezig
 zijn voor de bewuste conversie:
 
-- **URL** → `curl` (haalt op via de dienst `markdown.new`)
+- **URL / `.webloc`-linkbestand** → `curl` (haalt op via de dienst
+  `markdown.new`); `.webloc` wordt uitgelezen met `plutil`
+  (standaard aanwezig op macOS)
 - **Lokale PDF** → [`marker`](https://github.com/VikParuchuri/marker)
   (`pip install marker-pdf`), levert `marker_single` — behoudt tabellen,
   kolommen en leesvolgorde
@@ -107,5 +110,7 @@ zijn voor de bewuste conversie:
 ## Routering
 
 - Begint de input met `http` → URL
+- `.webloc`-bestand (alleen bij de map-workflow) → URL wordt eruit gehaald
+  en als URL verwerkt
 - Eindigt op `.pdf` → lokale PDF via `marker_single`
 - Eindigt op `.docx`, `.pptx`, `.odt` of `.rtf` → office-bestand via `pandoc`

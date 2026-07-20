@@ -8,7 +8,7 @@
 WATCH_FOLDER="$HOME/NaarMarkdown"
 
 # Root van je Obsidian vault.
-VAULT_PATH="/Users/h.j.tenbolscher/Library/CloudStorage/OneDrive-Saxion/Obsidian/Saxion"
+VAULT_PATH="/Users/jouwgebruikersnaam/pad/naar/je/Obsidian-vault"
 
 # Map binnen de vault waar de omgezette notities in terechtkomen.
 VAULT_FOLDER="Inbox"
