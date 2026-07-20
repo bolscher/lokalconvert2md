@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Launcher voor Verwerk.app: draait verwerk-map.sh dat naast deze app
+# in dezelfde projectmap staat.
+set -euo pipefail
+
+APP_BUNDLE="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+REPO_DIR="$(dirname "$APP_BUNDLE")"
+
+exec "$REPO_DIR/verwerk-map.sh"

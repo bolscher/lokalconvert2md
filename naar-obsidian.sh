@@ -6,9 +6,14 @@
 # Gebruik:
 #   ./naar-obsidian.sh <url | pad-naar.pdf | pad-naar.docx|.pptx|.odt|.rtf>
 #
-# Vault-map is te overschrijven met de env var OBSIDIAN_VAULT_INBOX.
+# Vault-map is te overschrijven met de env var OBSIDIAN_VAULT_INBOX, of via
+# ~/.naar-obsidianrc (nodig wanneer dit script via een dubbelklikbare app
+# gestart wordt, want dan zijn shell-env-vars uit .zshrc niet beschikbaar).
 
 set -euo pipefail
+
+export PATH="/opt/homebrew/bin:/usr/local/bin:$HOME/.local/bin:$PATH"
+[ -f "$HOME/.naar-obsidianrc" ] && . "$HOME/.naar-obsidianrc"
 
 VAULT_INBOX="${OBSIDIAN_VAULT_INBOX:-/Users/h.j.tenbolscher/Library/CloudStorage/OneDrive-Saxion/Obsidian/Saxion/Inbox}"
 
