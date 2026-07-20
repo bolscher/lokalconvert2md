@@ -55,26 +55,39 @@ Dat hoeft maar één keer.
 Berichtgeving en controleer of meldingen van `osascript`/Script Editor zijn
 toegestaan (macOS koppelt de melding daaraan omdat het script die aanroept).
 
-**Andere map- of vaultpaden gebruiken:** maak een bestand `~/.naar-obsidianrc`
-aan (wordt door beide scripts ingelezen, ook wanneer ze via de app worden
-gestart — een dubbelgeklikte app leest je `.zshrc` namelijk niet):
+## Configuratie: doelvault en watch-map instellen
+
+Kopieer het meegeleverde voorbeeldbestand naar je home-map en pas het aan:
 
 ```bash
-export WATCH_FOLDER="/pad/naar/eigen/map"
-export OBSIDIAN_VAULT_INBOX="/pad/naar/andere/vault/Inbox"
+cp naar-obsidianrc.example ~/.naar-obsidianrc
 ```
 
-## Losse aanroep en vault-pad instellen
+`~/.naar-obsidianrc` wordt door alle scripts automatisch ingelezen — ook
+wanneer ze via `Verwerk.app` worden gestart (een dubbelgeklikte app leest je
+`.zshrc` namelijk niet). Inhoud:
 
-Standaard schrijft het script naar:
+```bash
+# Map waar je bestanden neerzet om te laten converteren.
+WATCH_FOLDER="$HOME/NaarMarkdown"
+
+# Root van je Obsidian vault.
+VAULT_PATH="/pad/naar/je/vault"
+
+# Map binnen de vault waar de omgezette notities in terechtkomen.
+VAULT_FOLDER="Inbox"
+```
+
+Zonder dit bestand vallen de scripts terug op `~/NaarMarkdown` als watch-map
+en op:
 
 ```
 /Users/h.j.tenbolscher/Library/CloudStorage/OneDrive-Saxion/Obsidian/Saxion/Inbox
 ```
 
-Wil je een ander pad gebruiken (bijvoorbeeld op een andere machine), zet dan
-de environment variable `OBSIDIAN_VAULT_INBOX` (of gebruik `~/.naar-obsidianrc`
-zoals hierboven):
+als doelmap. Wil je liever in één keer het volledige doelpad opgeven in
+plaats van `VAULT_PATH`/`VAULT_FOLDER`, zet dan `OBSIDIAN_VAULT_INBOX` (heeft
+voorrang) — hetzij in `~/.naar-obsidianrc`, hetzij losstaand als env var:
 
 ```bash
 OBSIDIAN_VAULT_INBOX="/pad/naar/andere/vault/Inbox" ./naar-obsidian.sh document.pdf

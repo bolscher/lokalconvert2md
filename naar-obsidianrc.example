@@ -1,0 +1,19 @@
+# Configuratie voor naar-obsidian.sh / verwerk-map.sh / Verwerk.app
+#
+# Kopieer dit bestand naar ~/.naar-obsidianrc en pas de waarden hieronder aan.
+# ~/.naar-obsidianrc wordt automatisch ingelezen, ook wanneer de scripts via
+# de dubbelklikbare Verwerk.app worden gestart (die leest je .zshrc niet).
+
+# Map waar je bestanden neerzet om te laten converteren.
+WATCH_FOLDER="$HOME/NaarMarkdown"
+
+# Root van je Obsidian vault.
+VAULT_PATH="/Users/h.j.tenbolscher/Library/CloudStorage/OneDrive-Saxion/Obsidian/Saxion"
+
+# Map binnen de vault waar de omgezette notities in terechtkomen.
+VAULT_FOLDER="Inbox"
+
+# Alternatief: wil je in plaats van VAULT_PATH/VAULT_FOLDER liever in één
+# keer het volledige doelpad opgeven, gebruik dan OBSIDIAN_VAULT_INBOX
+# (heeft voorrang zodra hij gezet is):
+# OBSIDIAN_VAULT_INBOX="/volledig/pad/naar/vault/Inbox"

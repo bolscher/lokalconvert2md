@@ -6,14 +6,20 @@
 # Gebruik:
 #   ./naar-obsidian.sh <url | pad-naar.pdf | pad-naar.docx|.pptx|.odt|.rtf>
 #
-# Vault-map is te overschrijven met de env var OBSIDIAN_VAULT_INBOX, of via
-# ~/.naar-obsidianrc (nodig wanneer dit script via een dubbelklikbare app
-# gestart wordt, want dan zijn shell-env-vars uit .zshrc niet beschikbaar).
+# Doelvault en -map zijn in te stellen via ~/.naar-obsidianrc (zie
+# naar-obsidianrc.example) met VAULT_PATH en VAULT_FOLDER, of desgewenst met
+# de env var OBSIDIAN_VAULT_INBOX (volledig pad, overschrijft VAULT_PATH/
+# VAULT_FOLDER). Een configbestand is nodig omdat een via Finder gestarte
+# app (Verwerk.app) geen shell-env-vars uit .zshrc inleest.
 
 set -euo pipefail
 
 export PATH="/opt/homebrew/bin:/usr/local/bin:$HOME/.local/bin:$PATH"
 [ -f "$HOME/.naar-obsidianrc" ] && . "$HOME/.naar-obsidianrc"
+
+if [ -z "${OBSIDIAN_VAULT_INBOX:-}" ] && [ -n "${VAULT_PATH:-}" ]; then
+  OBSIDIAN_VAULT_INBOX="$VAULT_PATH/${VAULT_FOLDER:-Inbox}"
+fi
 
 VAULT_INBOX="${OBSIDIAN_VAULT_INBOX:-/Users/h.j.tenbolscher/Library/CloudStorage/OneDrive-Saxion/Obsidian/Saxion/Inbox}"
 
